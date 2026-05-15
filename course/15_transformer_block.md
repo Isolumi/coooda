@@ -9,6 +9,7 @@ You write:
 - `packages/coooda_cpp/include/coooda_cpp/nn/transformer_block.hpp`
 - `packages/coooda_cpp/src/nn/transformer_block.cpp`
 - `tests/cpp/test_transformer_block.cpp`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Attention helpers
@@ -31,6 +32,7 @@ You write:
 - `packages/coooda_cuda/include/coooda_cuda/nn/transformer_block.cuh`
 - `packages/coooda_cuda/src/nn/transformer_block.cu`
 - `tests/cuda/test_transformer_block.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - CUDA attention helpers
@@ -51,6 +53,7 @@ Prove CUDA transformer block outputs match the C++ reference.
 
 You write:
 - `tests/compare/test_transformer_block_compare.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Compare helpers
@@ -70,14 +73,18 @@ Add transformer block cases to the release compare benchmark runner.
 
 You write:
 - `bench/compare/bench_transformer_block.cu`
+- `bench/CMakeLists.txt`
 
 Already provided:
 - Benchmark timer helpers
-- Release preset
 
 Run:
+- `cmake --preset debug`
+- `cmake --build --preset debug`
+- `ctest --preset debug -R transformer_block_compare`
+- `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case transformer_block`
 
 Pass:
-- The benchmark runs after debug correctness checks pass.
+- The debug compare test passes, then the benchmark runs.

@@ -9,6 +9,7 @@ You write:
 - `packages/coooda_cpp/include/coooda_cpp/training/tiny_mlp.hpp`
 - `packages/coooda_cpp/src/training/tiny_mlp.cpp`
 - `tests/cpp/test_tiny_mlp_training.cpp`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Linear and MLP helpers
@@ -31,6 +32,7 @@ You write:
 - `packages/coooda_cuda/include/coooda_cuda/training/tiny_mlp.cuh`
 - `packages/coooda_cuda/src/training/tiny_mlp.cu`
 - `tests/cuda/test_tiny_mlp_training.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - CUDA layer helpers
@@ -50,6 +52,7 @@ Prove CUDA training updates match the C++ reference.
 
 You write:
 - `tests/compare/test_tiny_mlp_training_compare.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Compare helpers
@@ -69,14 +72,18 @@ Add tiny MLP training to the release compare benchmark runner.
 
 You write:
 - `bench/compare/bench_tiny_mlp_training.cu`
+- `bench/CMakeLists.txt`
 
 Already provided:
 - Benchmark timer helpers
-- Release preset
 
 Run:
+- `cmake --preset debug`
+- `cmake --build --preset debug`
+- `ctest --preset debug -R tiny_mlp_training_compare`
+- `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case tiny_mlp_training`
 
 Pass:
-- The benchmark runs after debug correctness checks pass.
+- The debug compare test passes, then the benchmark runs.

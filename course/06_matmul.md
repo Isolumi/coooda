@@ -9,6 +9,7 @@ You write:
 - `packages/coooda_cpp/include/coooda_cpp/ops/matmul.hpp`
 - `packages/coooda_cpp/src/ops/matmul.cpp`
 - `tests/cpp/test_matmul.cpp`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Tensor shape helpers
@@ -30,6 +31,7 @@ You write:
 - `packages/coooda_cuda/include/coooda_cuda/ops/matmul.cuh`
 - `packages/coooda_cuda/src/ops/matmul.cu`
 - `tests/cuda/test_matmul.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Device buffer helpers
@@ -49,6 +51,7 @@ Prove CUDA matmul matches the C++ reference.
 
 You write:
 - `tests/compare/test_matmul_compare.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Compare helpers
@@ -68,14 +71,18 @@ Add matmul to the release compare benchmark runner.
 
 You write:
 - `bench/compare/bench_matmul.cu`
+- `bench/CMakeLists.txt`
 
 Already provided:
 - Benchmark timer helpers
-- Release preset
 
 Run:
+- `cmake --preset debug`
+- `cmake --build --preset debug`
+- `ctest --preset debug -R matmul_compare`
+- `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case matmul`
 
 Pass:
-- The benchmark runs after debug correctness checks pass.
+- The debug compare test passes, then the benchmark runs.

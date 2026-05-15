@@ -11,9 +11,10 @@ You write:
 - `packages/coooda_core/src/status.cpp`
 - `packages/coooda_core/src/tensor.cpp`
 - `tests/cpp/test_core_helpers.cpp`
+- `tests/CMakeLists.txt`
 
 Already provided:
-- Core package target wiring
+- Existing package examples
 - Test harness entry points
 
 Run:
@@ -34,6 +35,7 @@ You write:
 - `packages/coooda_core/src/cuda_check.cu`
 - `packages/coooda_core/src/device.cu`
 - `tests/cuda/test_core_cuda.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - CUDA runtime linkage
@@ -53,9 +55,10 @@ Prove shared result and mismatch reporting works for both backends.
 
 You write:
 - `tests/compare/test_core_compare.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
-- Compare package target wiring
+- Existing smoke examples
 - Mismatch formatting helpers
 
 Run:
@@ -72,14 +75,18 @@ Wire core helpers into the release compare benchmark runner.
 
 You write:
 - `bench/compare/bench_core_helpers.cu`
+- `bench/CMakeLists.txt`
 
 Already provided:
 - Benchmark timer helpers
-- Release preset
 
 Run:
+- `cmake --preset debug`
+- `cmake --build --preset debug`
+- `ctest --preset debug -R core_compare`
+- `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case core_helpers`
 
 Pass:
-- The benchmark runs after debug correctness checks pass.
+- The debug compare test passes, then the benchmark runs.

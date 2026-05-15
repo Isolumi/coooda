@@ -10,6 +10,7 @@ You write:
 - `packages/coooda_cpp/src/models/tiny_gpt.cpp`
 - `apps/tiny_gpt_cpp.cpp`
 - `tests/cpp/test_tiny_gpt.cpp`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Transformer block helpers
@@ -33,6 +34,7 @@ You write:
 - `packages/coooda_cuda/src/models/tiny_gpt.cu`
 - `apps/tiny_gpt_cuda.cu`
 - `tests/cuda/test_tiny_gpt.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - CUDA transformer block helpers
@@ -53,6 +55,7 @@ Prove CUDA Tiny GPT outputs match the C++ reference.
 
 You write:
 - `tests/compare/test_tiny_gpt_compare.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Compare helpers
@@ -74,17 +77,21 @@ You write:
 - `apps/tiny_gpt_cpp.cpp`
 - `apps/tiny_gpt_cuda.cu`
 - `bench/compare/bench_tiny_gpt.cu`
+- `bench/CMakeLists.txt`
 
 Already provided:
-- App target wiring
+- Existing app examples
 - Benchmark timer helpers
-- Release preset
 
 Run:
+- `cmake --preset debug`
+- `cmake --build --preset debug`
+- `ctest --preset debug -R tiny_gpt_compare`
+- `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/apps/tiny_gpt_cpp`
 - `./build/release/apps/tiny_gpt_cuda`
 - `./build/release/bench/coooda_compare_bench --case tiny_gpt`
 
 Pass:
-- Apps run and the benchmark runs after debug correctness checks pass.
+- The debug compare test passes, then both apps and the benchmark run.

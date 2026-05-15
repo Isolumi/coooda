@@ -9,6 +9,7 @@ You write:
 - `packages/coooda_cpp/include/coooda_cpp/ops/elementwise.hpp`
 - `packages/coooda_cpp/src/ops/elementwise.cpp`
 - `tests/cpp/test_elementwise.cpp`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Vector operation patterns
@@ -30,6 +31,7 @@ You write:
 - `packages/coooda_cuda/include/coooda_cuda/ops/elementwise.cuh`
 - `packages/coooda_cuda/src/ops/elementwise.cu`
 - `tests/cuda/test_elementwise.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - CUDA vector operation patterns
@@ -49,6 +51,7 @@ Prove CUDA elementwise operations match the C++ reference.
 
 You write:
 - `tests/compare/test_elementwise_compare.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Compare helpers
@@ -68,14 +71,18 @@ Add elementwise and fused cases to the release compare benchmark runner.
 
 You write:
 - `bench/compare/bench_elementwise.cu`
+- `bench/CMakeLists.txt`
 
 Already provided:
 - Benchmark timer helpers
-- Release preset
 
 Run:
+- `cmake --preset debug`
+- `cmake --build --preset debug`
+- `ctest --preset debug -R elementwise_compare`
+- `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case elementwise`
 
 Pass:
-- The benchmark runs after debug correctness checks pass.
+- The debug compare test passes, then the benchmark runs.

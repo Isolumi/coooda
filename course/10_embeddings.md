@@ -9,6 +9,7 @@ You write:
 - `packages/coooda_cpp/include/coooda_cpp/nn/embedding.hpp`
 - `packages/coooda_cpp/src/nn/embedding.cpp`
 - `tests/cpp/test_embeddings.cpp`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Tensor helpers
@@ -30,6 +31,7 @@ You write:
 - `packages/coooda_cuda/include/coooda_cuda/nn/embedding.cuh`
 - `packages/coooda_cuda/src/nn/embedding.cu`
 - `tests/cuda/test_embeddings.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Device buffer helpers
@@ -49,6 +51,7 @@ Prove CUDA embedding lookup matches the C++ reference.
 
 You write:
 - `tests/compare/test_embeddings_compare.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Compare helpers
@@ -68,14 +71,18 @@ Add embeddings to the release compare benchmark runner.
 
 You write:
 - `bench/compare/bench_embeddings.cu`
+- `bench/CMakeLists.txt`
 
 Already provided:
 - Benchmark timer helpers
-- Release preset
 
 Run:
+- `cmake --preset debug`
+- `cmake --build --preset debug`
+- `ctest --preset debug -R embeddings_compare`
+- `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case embeddings`
 
 Pass:
-- The benchmark runs after debug correctness checks pass.
+- The debug compare test passes, then the benchmark runs.

@@ -9,11 +9,12 @@ You write:
 - `packages/coooda_cpp/include/coooda_cpp/ops/vector.hpp`
 - `packages/coooda_cpp/src/ops/vector.cpp`
 - `tests/cpp/test_vector_ops.cpp`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Test harness
 - Mismatch reporting
-- Build target wiring
+- Existing smoke examples
 
 Run:
 - `cmake --build --preset debug`
@@ -31,6 +32,7 @@ You write:
 - `packages/coooda_cuda/include/coooda_cuda/ops/vector.cuh`
 - `packages/coooda_cuda/src/ops/vector.cu`
 - `tests/cuda/test_vector_ops.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - CUDA error checks
@@ -53,9 +55,10 @@ You write:
 - `packages/coooda_compare/include/coooda_compare/ops/vector_compare.hpp`
 - `packages/coooda_compare/src/ops/vector_compare.cu`
 - `tests/compare/test_vector_ops_compare.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
-- Compare package target wiring
+- Existing smoke examples
 - Seeded input helpers
 
 Run:
@@ -75,14 +78,19 @@ You write:
 - `packages/coooda_cuda/src/ops/vector.cu`
 - `bench/cuda/bench_vector_ops.cu`
 - `bench/compare/bench_vector_ops_compare.cu`
+- `bench/CMakeLists.txt`
 
 Already provided:
-- Release preset
 - Benchmark runner
 
 Run:
+- `cmake --preset debug`
+- `cmake --build --preset debug`
+- `ctest --preset debug -R vector_ops_compare`
+- `cmake --preset release`
 - `cmake --build --preset release`
+- `./build/release/bench/coooda_cuda_bench --case vector_ops`
 - `./build/release/bench/coooda_compare_bench --case vector_ops`
 
 Pass:
-- Correctness still passes before any speed claim.
+- The debug compare test passes, then both benchmarks run.

@@ -11,6 +11,7 @@ You write:
 - `packages/coooda_cpp/src/nn/backward.cpp`
 - `packages/coooda_cpp/src/optim/sgd.cpp`
 - `tests/cpp/test_backward_optimizers.cpp`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Layer helpers
@@ -34,6 +35,7 @@ You write:
 - `packages/coooda_cuda/src/nn/backward.cu`
 - `packages/coooda_cuda/src/optim/sgd.cu`
 - `tests/cuda/test_backward_optimizers.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Device buffer helpers
@@ -53,6 +55,7 @@ Prove CUDA gradients and updates match the C++ reference.
 
 You write:
 - `tests/compare/test_backward_optimizers_compare.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Compare helpers
@@ -72,14 +75,18 @@ Add backward and optimizer cases to the release compare benchmark runner.
 
 You write:
 - `bench/compare/bench_backward_optimizers.cu`
+- `bench/CMakeLists.txt`
 
 Already provided:
 - Benchmark timer helpers
-- Release preset
 
 Run:
+- `cmake --preset debug`
+- `cmake --build --preset debug`
+- `ctest --preset debug -R backward_optimizers_compare`
+- `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case backward_optimizers`
 
 Pass:
-- The benchmark runs after debug correctness checks pass.
+- The debug compare test passes, then the benchmark runs.

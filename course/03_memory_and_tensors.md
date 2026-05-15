@@ -10,6 +10,7 @@ You write:
 - `packages/coooda_core/include/coooda_core/tensor.hpp`
 - `packages/coooda_core/src/tensor.cpp`
 - `tests/cpp/test_memory_tensors.cpp`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Core status type
@@ -31,6 +32,7 @@ You write:
 - `packages/coooda_cuda/include/coooda_cuda/memory/device_buffer.cuh`
 - `packages/coooda_cuda/src/memory/device_buffer.cu`
 - `tests/cuda/test_memory_tensors.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - CUDA check helpers
@@ -50,9 +52,10 @@ Confirm host and device tensor transfers preserve values.
 
 You write:
 - `tests/compare/test_memory_tensors_compare.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
-- Compare test target wiring
+- Existing smoke examples
 - Seeded input helpers
 
 Run:
@@ -69,14 +72,18 @@ Add memory transfer coverage to the release compare benchmark runner.
 
 You write:
 - `bench/compare/bench_memory_tensors.cu`
+- `bench/CMakeLists.txt`
 
 Already provided:
 - Benchmark timer helpers
-- Release preset
 
 Run:
+- `cmake --preset debug`
+- `cmake --build --preset debug`
+- `ctest --preset debug -R memory_tensors_compare`
+- `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case memory_tensors`
 
 Pass:
-- The benchmark runs after debug correctness checks pass.
+- The debug compare test passes, then the benchmark runs.

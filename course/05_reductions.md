@@ -9,6 +9,7 @@ You write:
 - `packages/coooda_cpp/include/coooda_cpp/ops/reductions.hpp`
 - `packages/coooda_cpp/src/ops/reductions.cpp`
 - `tests/cpp/test_reductions.cpp`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Tensor helpers
@@ -30,6 +31,7 @@ You write:
 - `packages/coooda_cuda/include/coooda_cuda/ops/reductions.cuh`
 - `packages/coooda_cuda/src/ops/reductions.cu`
 - `tests/cuda/test_reductions.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Device buffer helpers
@@ -49,6 +51,7 @@ Prove CUDA reductions match the C++ reference.
 
 You write:
 - `tests/compare/test_reductions_compare.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Compare helpers
@@ -68,14 +71,18 @@ Add reductions to the release compare benchmark runner.
 
 You write:
 - `bench/compare/bench_reductions.cu`
+- `bench/CMakeLists.txt`
 
 Already provided:
 - Benchmark timer helpers
-- Release preset
 
 Run:
+- `cmake --preset debug`
+- `cmake --build --preset debug`
+- `ctest --preset debug -R reductions_compare`
+- `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case reductions`
 
 Pass:
-- The benchmark runs after debug correctness checks pass.
+- The debug compare test passes, then the benchmark runs.

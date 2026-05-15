@@ -11,6 +11,7 @@ You write:
 - `packages/coooda_cpp/src/nn/linear.cpp`
 - `packages/coooda_cpp/src/nn/mlp.cpp`
 - `tests/cpp/test_linear_mlp.cpp`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Matmul helpers
@@ -35,6 +36,7 @@ You write:
 - `packages/coooda_cuda/src/nn/linear.cu`
 - `packages/coooda_cuda/src/nn/mlp.cu`
 - `tests/cuda/test_linear_mlp.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - CUDA matmul helpers
@@ -54,6 +56,7 @@ Prove CUDA linear and MLP outputs match the C++ reference.
 
 You write:
 - `tests/compare/test_linear_mlp_compare.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Compare helpers
@@ -73,14 +76,18 @@ Add linear and MLP cases to the release compare benchmark runner.
 
 You write:
 - `bench/compare/bench_linear_mlp.cu`
+- `bench/CMakeLists.txt`
 
 Already provided:
 - Benchmark timer helpers
-- Release preset
 
 Run:
+- `cmake --preset debug`
+- `cmake --build --preset debug`
+- `ctest --preset debug -R linear_mlp_compare`
+- `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case linear_mlp`
 
 Pass:
-- The benchmark runs after debug correctness checks pass.
+- The debug compare test passes, then the benchmark runs.

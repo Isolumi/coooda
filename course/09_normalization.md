@@ -9,6 +9,7 @@ You write:
 - `packages/coooda_cpp/include/coooda_cpp/nn/normalization.hpp`
 - `packages/coooda_cpp/src/nn/normalization.cpp`
 - `tests/cpp/test_normalization.cpp`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Reduction helpers
@@ -30,6 +31,7 @@ You write:
 - `packages/coooda_cuda/include/coooda_cuda/nn/normalization.cuh`
 - `packages/coooda_cuda/src/nn/normalization.cu`
 - `tests/cuda/test_normalization.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - CUDA reduction patterns
@@ -49,6 +51,7 @@ Prove CUDA normalization matches the C++ reference.
 
 You write:
 - `tests/compare/test_normalization_compare.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Compare helpers
@@ -68,14 +71,18 @@ Add normalization to the release compare benchmark runner.
 
 You write:
 - `bench/compare/bench_normalization.cu`
+- `bench/CMakeLists.txt`
 
 Already provided:
 - Benchmark timer helpers
-- Release preset
 
 Run:
+- `cmake --preset debug`
+- `cmake --build --preset debug`
+- `ctest --preset debug -R normalization_compare`
+- `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case normalization`
 
 Pass:
-- The benchmark runs after debug correctness checks pass.
+- The debug compare test passes, then the benchmark runs.

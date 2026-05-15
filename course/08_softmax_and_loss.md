@@ -9,6 +9,7 @@ You write:
 - `packages/coooda_cpp/include/coooda_cpp/nn/loss.hpp`
 - `packages/coooda_cpp/src/nn/loss.cpp`
 - `tests/cpp/test_softmax_loss.cpp`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Reduction helpers
@@ -30,6 +31,7 @@ You write:
 - `packages/coooda_cuda/include/coooda_cuda/nn/loss.cuh`
 - `packages/coooda_cuda/src/nn/loss.cu`
 - `tests/cuda/test_softmax_loss.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - CUDA reduction patterns
@@ -49,6 +51,7 @@ Prove CUDA softmax and loss outputs match the C++ reference.
 
 You write:
 - `tests/compare/test_softmax_loss_compare.cu`
+- `tests/CMakeLists.txt`
 
 Already provided:
 - Compare helpers
@@ -68,14 +71,18 @@ Add softmax and loss cases to the release compare benchmark runner.
 
 You write:
 - `bench/compare/bench_softmax_loss.cu`
+- `bench/CMakeLists.txt`
 
 Already provided:
 - Benchmark timer helpers
-- Release preset
 
 Run:
+- `cmake --preset debug`
+- `cmake --build --preset debug`
+- `ctest --preset debug -R softmax_loss_compare`
+- `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case softmax_loss`
 
 Pass:
-- The benchmark runs after debug correctness checks pass.
+- The debug compare test passes, then the benchmark runs.
