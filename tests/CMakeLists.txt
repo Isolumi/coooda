@@ -1,0 +1,11 @@
+add_executable(coooda_cpp_tests cpp/test_cpp_smoke.cpp)
+target_link_libraries(coooda_cpp_tests PRIVATE coooda_core coooda_cpp)
+add_test(NAME coooda_cpp_tests COMMAND coooda_cpp_tests)
+
+add_executable(coooda_cuda_tests cuda/test_cuda_smoke.cu)
+target_link_libraries(coooda_cuda_tests PRIVATE coooda_core coooda_cuda)
+add_test(NAME coooda_cuda_tests COMMAND coooda_cuda_tests)
+
+add_executable(coooda_compare_tests compare/test_compare_smoke.cu)
+target_link_libraries(coooda_compare_tests PRIVATE coooda_core coooda_compare)
+add_test(NAME coooda_compare_tests COMMAND coooda_compare_tests)
