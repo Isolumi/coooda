@@ -17,7 +17,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R matmul_cpp`
+- `ctest --preset debug -R matmul_cpp --no-tests=error`
 
 Pass:
 - C++ matmul tests pass for shape checks and known-value inputs.
@@ -39,7 +39,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R matmul_cuda`
+- `ctest --preset debug -R matmul_cuda --no-tests=error`
 
 Pass:
 - CUDA matmul tests match expected small matrices.
@@ -59,7 +59,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R matmul_compare`
+- `ctest --preset debug -R matmul_compare --no-tests=error`
 
 Pass:
 - Compare tests report no mismatches across the selected matrix sizes.
@@ -79,7 +79,7 @@ Already provided:
 Run:
 - `cmake --preset debug`
 - `cmake --build --preset debug`
-- `ctest --preset debug -R matmul_compare`
+- `ctest --preset debug -R matmul_compare --no-tests=error`
 - `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case matmul`

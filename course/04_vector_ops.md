@@ -18,7 +18,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R vector_ops_cpp`
+- `ctest --preset debug -R vector_ops_cpp --no-tests=error`
 
 Pass:
 - The C++ vector operation tests pass.
@@ -41,7 +41,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R vector_ops_cuda`
+- `ctest --preset debug -R vector_ops_cuda --no-tests=error`
 
 Pass:
 - CUDA vector operations match the expected small cases.
@@ -63,7 +63,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R vector_ops_compare`
+- `ctest --preset debug -R vector_ops_compare --no-tests=error`
 
 Pass:
 - The compare test reports no mismatch for exact, boundary, and seeded random cases.
@@ -86,7 +86,7 @@ Already provided:
 Run:
 - `cmake --preset debug`
 - `cmake --build --preset debug`
-- `ctest --preset debug -R vector_ops_compare`
+- `ctest --preset debug -R vector_ops_compare --no-tests=error`
 - `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_cuda_bench --case vector_ops`

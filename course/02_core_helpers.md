@@ -19,7 +19,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R core_helpers_cpp`
+- `ctest --preset debug -R core_helpers_cpp --no-tests=error`
 
 Pass:
 - Core helper tests pass for success, failure, shape, and storage cases.
@@ -43,7 +43,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R core_cuda`
+- `ctest --preset debug -R core_cuda --no-tests=error`
 
 Pass:
 - CUDA helper tests report errors cleanly and find a usable device when available.
@@ -63,7 +63,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R core_compare`
+- `ctest --preset debug -R core_compare --no-tests=error`
 
 Pass:
 - Compare helper tests pass for matching and mismatching inputs.
@@ -83,7 +83,7 @@ Already provided:
 Run:
 - `cmake --preset debug`
 - `cmake --build --preset debug`
-- `ctest --preset debug -R core_compare`
+- `ctest --preset debug -R core_compare --no-tests=error`
 - `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case core_helpers`

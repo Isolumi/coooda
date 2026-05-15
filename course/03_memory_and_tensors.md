@@ -18,7 +18,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R memory_tensors_cpp`
+- `ctest --preset debug -R memory_tensors_cpp --no-tests=error`
 
 Pass:
 - Host buffer and tensor tests pass for allocation, size, and view cases.
@@ -40,7 +40,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R memory_tensors_cuda`
+- `ctest --preset debug -R memory_tensors_cuda --no-tests=error`
 
 Pass:
 - Device buffer tests pass for allocation, copy in, copy out, and empty cases.
@@ -60,7 +60,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R memory_tensors_compare`
+- `ctest --preset debug -R memory_tensors_compare --no-tests=error`
 
 Pass:
 - Round-trip compare tests report no mismatches.
@@ -80,7 +80,7 @@ Already provided:
 Run:
 - `cmake --preset debug`
 - `cmake --build --preset debug`
-- `ctest --preset debug -R memory_tensors_compare`
+- `ctest --preset debug -R memory_tensors_compare --no-tests=error`
 - `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case memory_tensors`

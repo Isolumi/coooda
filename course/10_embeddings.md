@@ -17,7 +17,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R embeddings_cpp`
+- `ctest --preset debug -R embeddings_cpp --no-tests=error`
 
 Pass:
 - C++ embedding tests pass for known token IDs and boundary checks.
@@ -39,7 +39,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R embeddings_cuda`
+- `ctest --preset debug -R embeddings_cuda --no-tests=error`
 
 Pass:
 - CUDA embedding tests match expected small cases.
@@ -59,7 +59,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R embeddings_compare`
+- `ctest --preset debug -R embeddings_compare --no-tests=error`
 
 Pass:
 - Compare tests report no mismatches for selected token batches.
@@ -79,7 +79,7 @@ Already provided:
 Run:
 - `cmake --preset debug`
 - `cmake --build --preset debug`
-- `ctest --preset debug -R embeddings_compare`
+- `ctest --preset debug -R embeddings_compare --no-tests=error`
 - `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case embeddings`

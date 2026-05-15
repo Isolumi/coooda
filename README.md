@@ -20,11 +20,13 @@ The course is organized as small checkpoints. Each topic keeps the CPU and CUDA 
 ```bash
 cmake --preset debug
 cmake --build --preset debug
-ctest --preset debug
+ctest --preset debug --no-tests=error
 ./build/debug/apps/inspect_device
 ./build/debug/apps/run_checkpoint
 ./build/debug/apps/compare_backends
 ```
+
+Benchmark runners accept `--list` to show registered cases and `--case <name>` to run one case. Unknown cases return nonzero and print the available cases.
 
 Start at `course/00_start_here.md`.
 

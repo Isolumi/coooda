@@ -17,7 +17,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R softmax_loss_cpp`
+- `ctest --preset debug -R softmax_loss_cpp --no-tests=error`
 
 Pass:
 - C++ softmax and loss tests pass for known-value and seeded cases.
@@ -39,7 +39,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R softmax_loss_cuda`
+- `ctest --preset debug -R softmax_loss_cuda --no-tests=error`
 
 Pass:
 - CUDA softmax and loss tests match expected small cases.
@@ -59,7 +59,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R softmax_loss_compare`
+- `ctest --preset debug -R softmax_loss_compare --no-tests=error`
 
 Pass:
 - Compare tests report no mismatches within the chosen tolerance.
@@ -79,7 +79,7 @@ Already provided:
 Run:
 - `cmake --preset debug`
 - `cmake --build --preset debug`
-- `ctest --preset debug -R softmax_loss_compare`
+- `ctest --preset debug -R softmax_loss_compare --no-tests=error`
 - `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case softmax_loss`

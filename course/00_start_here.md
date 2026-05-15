@@ -16,8 +16,10 @@ Coooda is built in tiny checkpoints. Each topic keeps the C++ and CUDA work toge
 ```bash
 cmake --preset debug
 cmake --build --preset debug
-ctest --preset debug
+ctest --preset debug --no-tests=error
 ```
+
+Benchmark runners accept `--list` and `--case <name>`. Filtered CTest commands use `--no-tests=error` so a missing checkpoint test fails instead of passing silently.
 
 ## Package Map
 

@@ -31,7 +31,7 @@ Goal: prove the test harness is ready.
 You write: nothing.
 
 Run:
-- `ctest --preset debug`
+- `ctest --preset debug --no-tests=error`
 
 Pass:
 - C++ smoke, CUDA smoke, and compare smoke tests pass.

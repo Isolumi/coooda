@@ -19,7 +19,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R tiny_gpt_cpp`
+- `ctest --preset debug -R tiny_gpt_cpp --no-tests=error`
 
 Pass:
 - C++ Tiny GPT tests pass for deterministic small inputs.
@@ -43,7 +43,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R tiny_gpt_cuda`
+- `ctest --preset debug -R tiny_gpt_cuda --no-tests=error`
 
 Pass:
 - CUDA Tiny GPT tests match expected small cases.
@@ -63,7 +63,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R tiny_gpt_compare`
+- `ctest --preset debug -R tiny_gpt_compare --no-tests=error`
 
 Pass:
 - Compare tests report no mismatches within the chosen tolerance.
@@ -86,7 +86,7 @@ Already provided:
 Run:
 - `cmake --preset debug`
 - `cmake --build --preset debug`
-- `ctest --preset debug -R tiny_gpt_compare`
+- `ctest --preset debug -R tiny_gpt_compare --no-tests=error`
 - `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/apps/tiny_gpt_cpp`

@@ -18,7 +18,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R transformer_block_cpp`
+- `ctest --preset debug -R transformer_block_cpp --no-tests=error`
 
 Pass:
 - C++ transformer block tests pass for known-value and seeded cases.
@@ -41,7 +41,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R transformer_block_cuda`
+- `ctest --preset debug -R transformer_block_cuda --no-tests=error`
 
 Pass:
 - CUDA transformer block tests match expected small cases.
@@ -61,7 +61,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R transformer_block_compare`
+- `ctest --preset debug -R transformer_block_compare --no-tests=error`
 
 Pass:
 - Compare tests report no mismatches within the chosen tolerance.
@@ -81,7 +81,7 @@ Already provided:
 Run:
 - `cmake --preset debug`
 - `cmake --build --preset debug`
-- `ctest --preset debug -R transformer_block_compare`
+- `ctest --preset debug -R transformer_block_compare --no-tests=error`
 - `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case transformer_block`

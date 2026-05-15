@@ -18,7 +18,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R tiny_mlp_training_cpp`
+- `ctest --preset debug -R tiny_mlp_training_cpp --no-tests=error`
 
 Pass:
 - C++ tiny MLP training tests pass for deterministic updates.
@@ -40,7 +40,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R tiny_mlp_training_cuda`
+- `ctest --preset debug -R tiny_mlp_training_cuda --no-tests=error`
 
 Pass:
 - CUDA tiny MLP training tests match expected small cases.
@@ -60,7 +60,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R tiny_mlp_training_compare`
+- `ctest --preset debug -R tiny_mlp_training_compare --no-tests=error`
 
 Pass:
 - Compare tests report no mismatches for deterministic training steps.
@@ -80,7 +80,7 @@ Already provided:
 Run:
 - `cmake --preset debug`
 - `cmake --build --preset debug`
-- `ctest --preset debug -R tiny_mlp_training_compare`
+- `ctest --preset debug -R tiny_mlp_training_compare --no-tests=error`
 - `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case tiny_mlp_training`

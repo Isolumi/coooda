@@ -18,7 +18,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R attention_cpp`
+- `ctest --preset debug -R attention_cpp --no-tests=error`
 
 Pass:
 - C++ attention tests pass for known-value and masked cases.
@@ -40,7 +40,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R attention_cuda`
+- `ctest --preset debug -R attention_cuda --no-tests=error`
 
 Pass:
 - CUDA attention tests match expected small cases.
@@ -60,7 +60,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R attention_compare`
+- `ctest --preset debug -R attention_compare --no-tests=error`
 
 Pass:
 - Compare tests report no mismatches within the chosen tolerance.
@@ -80,7 +80,7 @@ Already provided:
 Run:
 - `cmake --preset debug`
 - `cmake --build --preset debug`
-- `ctest --preset debug -R attention_compare`
+- `ctest --preset debug -R attention_compare --no-tests=error`
 - `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case attention`

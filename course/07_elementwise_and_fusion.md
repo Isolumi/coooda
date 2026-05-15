@@ -17,7 +17,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R elementwise_cpp`
+- `ctest --preset debug -R elementwise_cpp --no-tests=error`
 
 Pass:
 - C++ elementwise tests pass for unary, binary, and broadcast-like cases.
@@ -39,7 +39,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R elementwise_cuda`
+- `ctest --preset debug -R elementwise_cuda --no-tests=error`
 
 Pass:
 - CUDA elementwise tests match expected small cases.
@@ -59,7 +59,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R elementwise_compare`
+- `ctest --preset debug -R elementwise_compare --no-tests=error`
 
 Pass:
 - Compare tests report no mismatches for baseline and fused cases.
@@ -79,7 +79,7 @@ Already provided:
 Run:
 - `cmake --preset debug`
 - `cmake --build --preset debug`
-- `ctest --preset debug -R elementwise_compare`
+- `ctest --preset debug -R elementwise_compare --no-tests=error`
 - `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case elementwise`

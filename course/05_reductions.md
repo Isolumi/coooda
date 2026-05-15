@@ -17,7 +17,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R reductions_cpp`
+- `ctest --preset debug -R reductions_cpp --no-tests=error`
 
 Pass:
 - C++ reduction tests pass for empty, small, and seeded inputs.
@@ -39,7 +39,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R reductions_cuda`
+- `ctest --preset debug -R reductions_cuda --no-tests=error`
 
 Pass:
 - CUDA reduction tests match expected values for small inputs.
@@ -59,7 +59,7 @@ Already provided:
 
 Run:
 - `cmake --build --preset debug`
-- `ctest --preset debug -R reductions_compare`
+- `ctest --preset debug -R reductions_compare --no-tests=error`
 
 Pass:
 - Compare tests report no mismatches within the chosen tolerance.
@@ -79,7 +79,7 @@ Already provided:
 Run:
 - `cmake --preset debug`
 - `cmake --build --preset debug`
-- `ctest --preset debug -R reductions_compare`
+- `ctest --preset debug -R reductions_compare --no-tests=error`
 - `cmake --preset release`
 - `cmake --build --preset release`
 - `./build/release/bench/coooda_compare_bench --case reductions`
