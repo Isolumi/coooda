@@ -154,7 +154,7 @@ Write exactly:
 
 ```json
 {
-  "version": 6,
+  "version": 5,
   "configurePresets": [
     {
       "name": "debug",
