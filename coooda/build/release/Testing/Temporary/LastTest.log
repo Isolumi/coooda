@@ -1,0 +1,25 @@
+Start testing: May 15 01:14 EDT
+----------------------------------------------------------
+1/1 Testing: coooda_tests
+1/1 Test: coooda_tests
+Command: "/home/isolumi/CS/cuda/standalone_transformer_cuda_course/coooda/build/release/coooda_tests"
+Directory: /home/isolumi/CS/cuda/standalone_transformer_cuda_course/coooda/build/release
+"coooda_tests" start time: May 15 01:14 EDT
+Output:
+----------------------------------------------------------
+[PASS] close_enough
+[PASS] failure_report
+[PASS] check_cuda
+[PASS] cpu_timer
+[PASS] run_benchmark
+[PASS] cuda_runtime
+6 test(s) passed
+<end of output>
+Test time =   0.24 sec
+----------------------------------------------------------
+Test Passed.
+"coooda_tests" end time: May 15 01:14 EDT
+"coooda_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: May 15 01:14 EDT

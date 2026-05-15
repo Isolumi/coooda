@@ -1,0 +1,2 @@
+/usr/bin/ar qc libcoooda.a CMakeFiles/coooda.dir/src/bench/benchmark.cpp.o CMakeFiles/coooda.dir/src/core/cuda_checks.cu.o CMakeFiles/coooda.dir/src/core/device.cu.o CMakeFiles/coooda.dir/src/core/timers.cu.o CMakeFiles/coooda.dir/src/tests/validation.cpp.o
+/usr/bin/ranlib libcoooda.a
