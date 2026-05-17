@@ -17,3 +17,7 @@ add_test(NAME core_cuda COMMAND core_cuda_tests)
 add_executable(coooda_compare_tests compare/test_compare_smoke.cu)
 target_link_libraries(coooda_compare_tests PRIVATE coooda_core coooda_compare)
 add_test(NAME coooda_compare_tests COMMAND coooda_compare_tests)
+
+add_executable(core_compare_tests compare/test_core_compare.cu)
+target_link_libraries(core_compare_tests PRIVATE coooda_core)
+add_test(NAME core_compare COMMAND core_compare_tests)
