@@ -1,8 +1,16 @@
 #include <coooda_compare/ops/vector_compare.hpp>
 #include <coooda_core/benchmark.hpp>
 
+#include <vector>
+
+namespace coooda_bench::compare {
+
+void append_core_helper_cases(std::vector<coooda_core::bench::BenchmarkCase> &cases);
+
+} // namespace coooda_bench::compare
+
 int main(int argc, char **argv) {
-    return coooda_core::bench::run_cases(argc, argv, {
+    std::vector<coooda_core::bench::BenchmarkCase> cases{
         {"smoke",
          "compare backend vector-add smoke benchmark",
          []() {
@@ -19,5 +27,8 @@ int main(int argc, char **argv) {
              });
              coooda_core::bench::print_result(result);
          }},
-    });
+    };
+
+    coooda_bench::compare::append_core_helper_cases(cases);
+    return coooda_core::bench::run_cases(argc, argv, cases);
 }

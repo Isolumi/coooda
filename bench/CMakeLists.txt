@@ -4,5 +4,8 @@ target_link_libraries(coooda_cpp_bench PRIVATE coooda_core coooda_cpp)
 add_executable(coooda_cuda_bench cuda/bench_cuda_smoke.cu)
 target_link_libraries(coooda_cuda_bench PRIVATE coooda_core coooda_cuda)
 
-add_executable(coooda_compare_bench compare/bench_compare_smoke.cu)
+add_executable(coooda_compare_bench
+  compare/bench_compare_smoke.cu
+  compare/bench_core_helpers.cu
+)
 target_link_libraries(coooda_compare_bench PRIVATE coooda_core coooda_compare)
