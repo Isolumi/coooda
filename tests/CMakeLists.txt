@@ -6,6 +6,14 @@ add_executable(core_helpers_cpp_tests cpp/test_core_helpers.cpp)
 target_link_libraries(core_helpers_cpp_tests PRIVATE coooda_core)
 add_test(NAME core_helpers_cpp COMMAND core_helpers_cpp_tests)
 
+add_executable(memory_tensors_cpp_tests cpp/test_memory_tensors.cpp)
+target_link_libraries(memory_tensors_cpp_tests PRIVATE coooda_core)
+add_test(NAME memory_tensors_cpp COMMAND memory_tensors_cpp_tests)
+
+add_executable(vector_ops_cpp_tests cpp/test_vector_ops.cpp)
+target_link_libraries(vector_ops_cpp_tests PRIVATE coooda_core coooda_cpp)
+add_test(NAME vector_ops_cpp COMMAND vector_ops_cpp_tests)
+
 add_executable(coooda_cuda_tests cuda/test_cuda_smoke.cu)
 target_link_libraries(coooda_cuda_tests PRIVATE coooda_core coooda_cuda)
 add_test(NAME coooda_cuda_tests COMMAND coooda_cuda_tests)
@@ -14,6 +22,14 @@ add_executable(core_cuda_tests cuda/test_core_cuda.cu)
 target_link_libraries(core_cuda_tests PRIVATE coooda_core)
 add_test(NAME core_cuda COMMAND core_cuda_tests)
 
+add_executable(memory_tensors_cuda_tests cuda/test_memory_tensors.cu)
+target_link_libraries(memory_tensors_cuda_tests PRIVATE coooda_core coooda_cuda)
+add_test(NAME memory_tensors_cuda COMMAND memory_tensors_cuda_tests)
+
+add_executable(vector_ops_cuda_tests cuda/test_vector_ops.cu)
+target_link_libraries(vector_ops_cuda_tests PRIVATE coooda_core coooda_cuda)
+add_test(NAME vector_ops_cuda COMMAND vector_ops_cuda_tests)
+
 add_executable(coooda_compare_tests compare/test_compare_smoke.cu)
 target_link_libraries(coooda_compare_tests PRIVATE coooda_core coooda_compare)
 add_test(NAME coooda_compare_tests COMMAND coooda_compare_tests)
@@ -21,3 +37,11 @@ add_test(NAME coooda_compare_tests COMMAND coooda_compare_tests)
 add_executable(core_compare_tests compare/test_core_compare.cu)
 target_link_libraries(core_compare_tests PRIVATE coooda_core)
 add_test(NAME core_compare COMMAND core_compare_tests)
+
+add_executable(memory_tensors_compare_tests compare/test_memory_tensors_compare.cu)
+target_link_libraries(memory_tensors_compare_tests PRIVATE coooda_core coooda_cuda)
+add_test(NAME memory_tensors_compare COMMAND memory_tensors_compare_tests)
+
+add_executable(vector_ops_compare_tests compare/test_vector_ops_compare.cu)
+target_link_libraries(vector_ops_compare_tests PRIVATE coooda_core coooda_compare)
+add_test(NAME vector_ops_compare COMMAND vector_ops_compare_tests)

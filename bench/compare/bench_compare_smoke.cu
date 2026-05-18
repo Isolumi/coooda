@@ -6,6 +6,8 @@
 namespace coooda_bench::compare {
 
 void append_core_helper_cases(std::vector<coooda_core::bench::BenchmarkCase> &cases);
+void append_memory_tensor_cases(std::vector<coooda_core::bench::BenchmarkCase> &cases);
+void append_vector_ops_compare_cases(std::vector<coooda_core::bench::BenchmarkCase> &cases);
 
 } // namespace coooda_bench::compare
 
@@ -19,16 +21,10 @@ int main(int argc, char **argv) {
              });
              coooda_core::bench::print_result(result);
          }},
-        {"vector_ops",
-         "compare backend seeded vector-add benchmark",
-         []() {
-             const auto result = coooda_core::bench::time_once("compare_vector_add_vector_ops", []() {
-                 (void)coooda_compare::ops::vector_add_matches_reference();
-             });
-             coooda_core::bench::print_result(result);
-         }},
     };
 
     coooda_bench::compare::append_core_helper_cases(cases);
+    coooda_bench::compare::append_memory_tensor_cases(cases);
+    coooda_bench::compare::append_vector_ops_compare_cases(cases);
     return coooda_core::bench::run_cases(argc, argv, cases);
 }

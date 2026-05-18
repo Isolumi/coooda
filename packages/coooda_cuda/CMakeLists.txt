@@ -1,4 +1,5 @@
 add_library(coooda_cuda
+  src/memory/device_buffer.cu
   src/ops/vector.cu
   src/package.cu
 )

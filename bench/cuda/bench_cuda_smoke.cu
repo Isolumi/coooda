@@ -4,8 +4,14 @@
 
 #include <vector>
 
+namespace coooda_bench::cuda {
+
+void append_vector_ops_cases(std::vector<coooda_core::bench::BenchmarkCase> &cases);
+
+} // namespace coooda_bench::cuda
+
 int main(int argc, char **argv) {
-    return coooda_core::bench::run_cases(argc, argv, {
+    std::vector<coooda_core::bench::BenchmarkCase> cases{
         {"smoke",
          "tiny CUDA vector-add smoke benchmark",
          []() {
@@ -14,15 +20,8 @@ int main(int argc, char **argv) {
              });
              coooda_core::bench::print_result(result);
          }},
-        {"vector_ops",
-         "seeded CUDA vector-add benchmark",
-         []() {
-             const std::vector<float> a = coooda_core::test::seeded_vector(4096, 0xC001U, -10.0f, 10.0f);
-             const std::vector<float> b = coooda_core::test::seeded_vector(4096, 0xD00DU, -10.0f, 10.0f);
-             const auto result = coooda_core::bench::time_once("cuda_vector_add_baseline_vector_ops", [&]() {
-                 (void)coooda_cuda::ops::vector_add_baseline(a, b);
-             });
-             coooda_core::bench::print_result(result);
-         }},
-    });
+    };
+
+    coooda_bench::cuda::append_vector_ops_cases(cases);
+    return coooda_core::bench::run_cases(argc, argv, cases);
 }
