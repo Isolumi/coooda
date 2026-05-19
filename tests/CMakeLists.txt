@@ -42,6 +42,10 @@ add_executable(reductions_cuda_tests cuda/test_reductions.cu)
 target_link_libraries(reductions_cuda_tests PRIVATE coooda_core coooda_cuda)
 add_test(NAME reductions_cuda COMMAND reductions_cuda_tests)
 
+add_executable(matmul_cuda_tests cuda/test_matmul.cu)
+target_link_libraries(matmul_cuda_tests PRIVATE coooda_core coooda_cuda)
+add_test(NAME matmul_cuda COMMAND matmul_cuda_tests)
+
 add_executable(coooda_compare_tests compare/test_compare_smoke.cu)
 target_link_libraries(coooda_compare_tests PRIVATE coooda_core coooda_compare)
 add_test(NAME coooda_compare_tests COMMAND coooda_compare_tests)
@@ -61,3 +65,7 @@ add_test(NAME vector_ops_compare COMMAND vector_ops_compare_tests)
 add_executable(reductions_compare_tests compare/test_reductions_compare.cu)
 target_link_libraries(reductions_compare_tests PRIVATE coooda_core coooda_cpp coooda_cuda)
 add_test(NAME reductions_compare COMMAND reductions_compare_tests)
+
+add_executable(matmul_compare_tests compare/test_matmul_compare.cu)
+target_link_libraries(matmul_compare_tests PRIVATE coooda_core coooda_cpp coooda_cuda)
+add_test(NAME matmul_compare COMMAND matmul_compare_tests)
