@@ -34,6 +34,10 @@ add_executable(vector_ops_cuda_tests cuda/test_vector_ops.cu)
 target_link_libraries(vector_ops_cuda_tests PRIVATE coooda_core coooda_cuda)
 add_test(NAME vector_ops_cuda COMMAND vector_ops_cuda_tests)
 
+add_executable(reductions_cuda_tests cuda/test_reductions.cu)
+target_link_libraries(reductions_cuda_tests PRIVATE coooda_core coooda_cuda)
+add_test(NAME reductions_cuda COMMAND reductions_cuda_tests)
+
 add_executable(coooda_compare_tests compare/test_compare_smoke.cu)
 target_link_libraries(coooda_compare_tests PRIVATE coooda_core coooda_compare)
 add_test(NAME coooda_compare_tests COMMAND coooda_compare_tests)
