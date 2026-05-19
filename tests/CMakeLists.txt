@@ -53,3 +53,7 @@ add_test(NAME memory_tensors_compare COMMAND memory_tensors_compare_tests)
 add_executable(vector_ops_compare_tests compare/test_vector_ops_compare.cu)
 target_link_libraries(vector_ops_compare_tests PRIVATE coooda_core coooda_compare)
 add_test(NAME vector_ops_compare COMMAND vector_ops_compare_tests)
+
+add_executable(reductions_compare_tests compare/test_reductions_compare.cu)
+target_link_libraries(reductions_compare_tests PRIVATE coooda_core coooda_cpp coooda_cuda)
+add_test(NAME reductions_compare COMMAND reductions_compare_tests)
