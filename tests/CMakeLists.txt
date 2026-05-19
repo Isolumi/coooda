@@ -18,6 +18,10 @@ add_executable(reductions_cpp_tests cpp/test_reductions.cpp)
 target_link_libraries(reductions_cpp_tests PRIVATE coooda_core coooda_cpp)
 add_test(NAME reductions_cpp COMMAND reductions_cpp_tests)
 
+add_executable(matmul_cpp_tests cpp/test_matmul.cpp)
+target_link_libraries(matmul_cpp_tests PRIVATE coooda_core coooda_cpp)
+add_test(NAME matmul_cpp COMMAND matmul_cpp_tests)
+
 add_executable(coooda_cuda_tests cuda/test_cuda_smoke.cu)
 target_link_libraries(coooda_cuda_tests PRIVATE coooda_core coooda_cuda)
 add_test(NAME coooda_cuda_tests COMMAND coooda_cuda_tests)

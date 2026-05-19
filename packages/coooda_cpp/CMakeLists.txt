@@ -1,4 +1,5 @@
 add_library(coooda_cpp
+  src/ops/matmul.cpp
   src/ops/reductions.cpp
   src/ops/vector.cpp
   src/package.cpp
