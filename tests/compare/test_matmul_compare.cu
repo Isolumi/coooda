@@ -6,6 +6,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace {
@@ -40,22 +41,27 @@ void require_matmul_match(
     const coooda_core::Tensor &b
 ) {
     const coooda_core::Tensor expected = coooda_cpp::ops::matmul_reference(a, b);
-    const coooda_core::Tensor actual = coooda_cuda::ops::matmul_baseline(a, b);
+    const std::vector<std::pair<std::string, coooda_core::Tensor>> actuals{
+        {"baseline", coooda_cuda::ops::matmul_baseline(a, b)},
+        {"tiled", coooda_cuda::ops::matmul_tiled(a, b)},
+    };
 
-    coooda_core::test::require_equal(
-        coooda_core::to_string(expected.shape()),
-        coooda_core::to_string(actual.shape()),
-        label + " shape"
-    );
+    for (const auto &[variant, actual] : actuals) {
+        coooda_core::test::require_equal(
+            coooda_core::to_string(expected.shape()),
+            coooda_core::to_string(actual.shape()),
+            label + " " + variant + " shape"
+        );
 
-    const coooda_core::test::MismatchReport report = coooda_core::test::compare_vectors(
-        label,
-        tensor_values(expected),
-        tensor_values(actual),
-        1.0e-4f,
-        1.0e-5f
-    );
-    coooda_core::test::require(report.matched, report.to_string());
+        const coooda_core::test::MismatchReport report = coooda_core::test::compare_vectors(
+            label + " " + variant,
+            tensor_values(expected),
+            tensor_values(actual),
+            1.0e-4f,
+            1.0e-5f
+        );
+        coooda_core::test::require(report.matched, report.to_string());
+    }
 }
 
 void require_seeded_matmul_match(

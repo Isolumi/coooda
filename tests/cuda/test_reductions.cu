@@ -62,17 +62,33 @@ int main() {
                  coooda_cuda::ops::sum_baseline({}) == 0.0f,
                  "empty sum should be zero"
              );
+             coooda_core::test::require(
+                 coooda_cuda::ops::sum_device_reduce({}) == 0.0f,
+                 "empty device sum should be zero"
+             );
              require_core_error(
                  []() { (void)coooda_cuda::ops::max_baseline({}); },
                  "empty max should fail"
+             );
+             require_core_error(
+                 []() { (void)coooda_cuda::ops::max_device_reduce({}); },
+                 "empty device max should fail"
              );
              require_core_error(
                  []() { (void)coooda_cuda::ops::mean_baseline({}); },
                  "empty mean should fail"
              );
              require_core_error(
+                 []() { (void)coooda_cuda::ops::mean_device_reduce({}); },
+                 "empty device mean should fail"
+             );
+             require_core_error(
                  []() { (void)coooda_cuda::ops::argmax_baseline({}); },
                  "empty argmax should fail"
+             );
+             require_core_error(
+                 []() { (void)coooda_cuda::ops::argmax_device_reduce({}); },
+                 "empty device argmax should fail"
              );
          }},
 
@@ -80,11 +96,18 @@ int main() {
              const std::vector<float> values{1.0f, -2.0f, 3.5f, 0.5f};
 
              require_close(3.0f, coooda_cuda::ops::sum_baseline(values), "small sum");
+             require_close(3.0f, coooda_cuda::ops::sum_device_reduce(values), "small device sum");
              require_close(3.5f, coooda_cuda::ops::max_baseline(values), "small max");
+             require_close(3.5f, coooda_cuda::ops::max_device_reduce(values), "small device max");
              require_close(0.75f, coooda_cuda::ops::mean_baseline(values), "small mean");
+             require_close(0.75f, coooda_cuda::ops::mean_device_reduce(values), "small device mean");
              coooda_core::test::require(
                  coooda_cuda::ops::argmax_baseline(values) == 2,
                  "small argmax"
+             );
+             coooda_core::test::require(
+                 coooda_cuda::ops::argmax_device_reduce(values) == 2,
+                 "small device argmax"
              );
          }},
 
@@ -115,15 +138,26 @@ int main() {
              const float expected_sum = manual_sum(values);
 
              require_close(expected_sum, coooda_cuda::ops::sum_baseline(values), "seeded sum");
+             require_close(expected_sum, coooda_cuda::ops::sum_device_reduce(values), "seeded device sum");
              require_close(manual_max(values), coooda_cuda::ops::max_baseline(values), "seeded max");
+             require_close(manual_max(values), coooda_cuda::ops::max_device_reduce(values), "seeded device max");
              require_close(
                  expected_sum / static_cast<float>(values.size()),
                  coooda_cuda::ops::mean_baseline(values),
                  "seeded mean"
              );
+             require_close(
+                 expected_sum / static_cast<float>(values.size()),
+                 coooda_cuda::ops::mean_device_reduce(values),
+                 "seeded device mean"
+             );
              coooda_core::test::require(
                  coooda_cuda::ops::argmax_baseline(values) == manual_argmax(values),
                  "seeded argmax"
+             );
+             coooda_core::test::require(
+                 coooda_cuda::ops::argmax_device_reduce(values) == manual_argmax(values),
+                 "seeded device argmax"
              );
          }},
     });

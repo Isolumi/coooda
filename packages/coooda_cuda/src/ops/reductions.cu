@@ -10,6 +10,7 @@
 #include <climits>
 #include <cstddef>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace {
@@ -41,6 +42,22 @@ public:
 
     DeviceIndexBuffer(const DeviceIndexBuffer &) = delete;
     DeviceIndexBuffer &operator=(const DeviceIndexBuffer &) = delete;
+
+    DeviceIndexBuffer(DeviceIndexBuffer &&other) noexcept
+        : data_(std::exchange(other.data_, nullptr)), size_(std::exchange(other.size_, 0)) {}
+
+    DeviceIndexBuffer &operator=(DeviceIndexBuffer &&other) noexcept {
+        if (this != &other) {
+            if (data_ != nullptr) {
+                (void)cudaFree(data_);
+            }
+
+            data_ = std::exchange(other.data_, nullptr);
+            size_ = std::exchange(other.size_, 0);
+        }
+
+        return *this;
+    }
 
     ~DeviceIndexBuffer() noexcept {
         if (data_ != nullptr) {
@@ -158,6 +175,58 @@ __global__ void argmax_blocks_kernel(const float *input, float *partial_values, 
     }
 }
 
+__global__ void argmax_pairs_blocks_kernel(
+    const float *input_values,
+    const int *input_indices,
+    float *partial_values,
+    int *partial_indices,
+    int n
+) {
+    __shared__ float values[kBlockSize];
+    __shared__ int indices[kBlockSize];
+
+    float best_value = input_values[0];
+    int best_index = input_indices[0];
+    const int stride = blockDim.x * gridDim.x;
+    for (int idx = blockIdx.x * blockDim.x + threadIdx.x; idx < n; idx += stride) {
+        const float value = input_values[idx];
+        const int index = input_indices[idx];
+        if (is_better_argmax(value, index, best_value, best_index)) {
+            best_value = value;
+            best_index = index;
+        }
+    }
+
+    values[threadIdx.x] = best_value;
+    indices[threadIdx.x] = best_index;
+    __syncthreads();
+
+    for (int offset = blockDim.x / 2; offset > 0; offset /= 2) {
+        if (threadIdx.x < offset) {
+            const float candidate_value = values[threadIdx.x + offset];
+            const int candidate_index = indices[threadIdx.x + offset];
+            if (is_better_argmax(candidate_value, candidate_index, values[threadIdx.x], indices[threadIdx.x])) {
+                values[threadIdx.x] = candidate_value;
+                indices[threadIdx.x] = candidate_index;
+            }
+        }
+        __syncthreads();
+    }
+
+    if (threadIdx.x == 0) {
+        partial_values[blockIdx.x] = values[0];
+        partial_indices[blockIdx.x] = indices[0];
+    }
+}
+
+float first_device_value(const coooda_cuda::memory::DeviceBuffer &buffer) {
+    return buffer.copy_to_host()[0];
+}
+
+int first_device_index(const DeviceIndexBuffer &buffer) {
+    return buffer.copy_to_host()[0];
+}
+
 } // namespace
 
 namespace coooda_cuda::ops {
@@ -246,6 +315,97 @@ std::size_t argmax_baseline(const std::vector<float> &input) {
     }
 
     return static_cast<std::size_t>(best_index);
+}
+
+float sum_device_reduce(const std::vector<float> &input) {
+    if (input.empty()) {
+        return 0.0f;
+    }
+
+    int current_count = checked_element_count(input.size(), "sum_device_reduce");
+    coooda_cuda::memory::DeviceBuffer current = coooda_cuda::memory::DeviceBuffer::from_host(input);
+
+    while (current_count > 1) {
+        const int next_count = reduction_grid_size(current_count);
+        coooda_cuda::memory::DeviceBuffer next(static_cast<std::size_t>(next_count));
+        sum_blocks_kernel<<<next_count, kBlockSize>>>(current.data(), next.data(), current_count);
+        COODA_CUDA_CHECK_LAST("sum_blocks_kernel(device_reduce)");
+
+        current = std::move(next);
+        current_count = next_count;
+    }
+
+    return first_device_value(current);
+}
+
+float max_device_reduce(const std::vector<float> &input) {
+    if (input.empty()) {
+        coooda_core::fail("max_device_reduce requires a non-empty input");
+    }
+
+    int current_count = checked_element_count(input.size(), "max_device_reduce");
+    coooda_cuda::memory::DeviceBuffer current = coooda_cuda::memory::DeviceBuffer::from_host(input);
+
+    while (current_count > 1) {
+        const int next_count = reduction_grid_size(current_count);
+        coooda_cuda::memory::DeviceBuffer next(static_cast<std::size_t>(next_count));
+        max_blocks_kernel<<<next_count, kBlockSize>>>(current.data(), next.data(), current_count);
+        COODA_CUDA_CHECK_LAST("max_blocks_kernel(device_reduce)");
+
+        current = std::move(next);
+        current_count = next_count;
+    }
+
+    return first_device_value(current);
+}
+
+float mean_device_reduce(const std::vector<float> &input) {
+    if (input.empty()) {
+        coooda_core::fail("mean_device_reduce requires a non-empty input");
+    }
+
+    return sum_device_reduce(input) / static_cast<float>(input.size());
+}
+
+std::size_t argmax_device_reduce(const std::vector<float> &input) {
+    if (input.empty()) {
+        coooda_core::fail("argmax_device_reduce requires a non-empty input");
+    }
+
+    const int n = checked_element_count(input.size(), "argmax_device_reduce");
+    int current_count = reduction_grid_size(n);
+    coooda_cuda::memory::DeviceBuffer device_input = coooda_cuda::memory::DeviceBuffer::from_host(input);
+    coooda_cuda::memory::DeviceBuffer current_values(static_cast<std::size_t>(current_count));
+    DeviceIndexBuffer current_indices(static_cast<std::size_t>(current_count));
+
+    argmax_blocks_kernel<<<current_count, kBlockSize>>>(
+        device_input.data(),
+        current_values.data(),
+        current_indices.data(),
+        n
+    );
+    COODA_CUDA_CHECK_LAST("argmax_blocks_kernel(device_reduce)");
+
+    while (current_count > 1) {
+        const int next_count = reduction_grid_size(current_count);
+        coooda_cuda::memory::DeviceBuffer next_values(static_cast<std::size_t>(next_count));
+        DeviceIndexBuffer next_indices(static_cast<std::size_t>(next_count));
+
+        argmax_pairs_blocks_kernel<<<next_count, kBlockSize>>>(
+            current_values.data(),
+            current_indices.data(),
+            next_values.data(),
+            next_indices.data(),
+            current_count
+        );
+        COODA_CUDA_CHECK_LAST("argmax_pairs_blocks_kernel(device_reduce)");
+
+        current_values = std::move(next_values);
+        current_indices = std::move(next_indices);
+        current_count = next_count;
+    }
+
+    return static_cast<std::size_t>(first_device_index(current_indices));
 }
 
 } // namespace coooda_cuda::ops

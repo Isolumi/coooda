@@ -50,6 +50,27 @@ void require_tensor_close(
     coooda_core::test::require(report.matched, report.to_string());
 }
 
+void require_matmul_variants_close(
+    const coooda_core::Tensor &a,
+    const coooda_core::Tensor &b,
+    const coooda_core::Shape &expected_shape,
+    const std::vector<float> &expected_values,
+    const std::string &label
+) {
+    require_tensor_close(
+        coooda_cuda::ops::matmul_baseline(a, b),
+        expected_shape,
+        expected_values,
+        label + " baseline"
+    );
+    require_tensor_close(
+        coooda_cuda::ops::matmul_tiled(a, b),
+        expected_shape,
+        expected_values,
+        label + " tiled"
+    );
+}
+
 template <typename Fn>
 void require_core_error(Fn &&fn, const std::string &message) {
     bool threw = false;
@@ -78,8 +99,9 @@ int main() {
                   11.0f, 12.0f}
              );
 
-             require_tensor_close(
-                 coooda_cuda::ops::matmul_baseline(a, b),
+             require_matmul_variants_close(
+                 a,
+                 b,
                  {{2, 2}},
                  {58.0f, 64.0f,
                   139.0f, 154.0f},
@@ -100,8 +122,9 @@ int main() {
                   1.5f, 4.0f, 2.0f, -2.0f}
              );
 
-             require_tensor_close(
-                 coooda_cuda::ops::matmul_baseline(a, b),
+             require_matmul_variants_close(
+                 a,
+                 b,
                  {{3, 4}},
                  {5.0f, 8.0f, 3.0f, -1.0f,
                   -1.25f, 2.0f, 2.0f, -4.0f,
@@ -114,11 +137,29 @@ int main() {
              const coooda_core::Tensor a({{0, 3}});
              const coooda_core::Tensor b({{3, 2}});
 
-             require_tensor_close(
-                 coooda_cuda::ops::matmul_baseline(a, b),
+             require_matmul_variants_close(
+                 a,
+                 b,
                  {{0, 2}},
                  {},
                  "empty matmul"
+             );
+         }},
+
+        {"matmul_cuda_tiled_handles_non_tile_multiples", []() {
+             const std::vector<float> a_values =
+                 coooda_core::test::seeded_vector(5 * 7, 0xA11CEU, -2.0f, 2.0f);
+             const std::vector<float> b_values =
+                 coooda_core::test::seeded_vector(7 * 3, 0xB0BU, -2.0f, 2.0f);
+             const coooda_core::Tensor a = tensor_from_values({{5, 7}}, a_values);
+             const coooda_core::Tensor b = tensor_from_values({{7, 3}}, b_values);
+             const coooda_core::Tensor baseline = coooda_cuda::ops::matmul_baseline(a, b);
+
+             require_tensor_close(
+                 coooda_cuda::ops::matmul_tiled(a, b),
+                 baseline.shape(),
+                 tensor_values(baseline),
+                 "non tile multiple tiled matmul"
              );
          }},
 
@@ -127,7 +168,7 @@ int main() {
                  []() {
                      const coooda_core::Tensor a({{2, 3, 1}});
                      const coooda_core::Tensor b({{3, 2}});
-                     (void)coooda_cuda::ops::matmul_baseline(a, b);
+                     (void)coooda_cuda::ops::matmul_tiled(a, b);
                  },
                  "left input must be rank 2"
              );
@@ -135,7 +176,7 @@ int main() {
                  []() {
                      const coooda_core::Tensor a({{2, 3}});
                      const coooda_core::Tensor b({{3}});
-                     (void)coooda_cuda::ops::matmul_baseline(a, b);
+                     (void)coooda_cuda::ops::matmul_tiled(a, b);
                  },
                  "right input must be rank 2"
              );
@@ -146,7 +187,7 @@ int main() {
                  []() {
                      const coooda_core::Tensor a({{2, 3}});
                      const coooda_core::Tensor b({{4, 2}});
-                     (void)coooda_cuda::ops::matmul_baseline(a, b);
+                     (void)coooda_cuda::ops::matmul_tiled(a, b);
                  },
                  "inner dimensions must match"
              );

@@ -39,18 +39,37 @@ void compare_non_empty_case(const std::string &label, const std::vector<float> &
         coooda_cuda::ops::sum_baseline(values)
     );
     require_close(
+        label + "_device_sum",
+        coooda_cpp::ops::sum_reference(values),
+        coooda_cuda::ops::sum_device_reduce(values)
+    );
+    require_close(
         label + "_max",
         coooda_cpp::ops::max_reference(values),
         coooda_cuda::ops::max_baseline(values)
+    );
+    require_close(
+        label + "_device_max",
+        coooda_cpp::ops::max_reference(values),
+        coooda_cuda::ops::max_device_reduce(values)
     );
     require_close(
         label + "_mean",
         coooda_cpp::ops::mean_reference(values),
         coooda_cuda::ops::mean_baseline(values)
     );
+    require_close(
+        label + "_device_mean",
+        coooda_cpp::ops::mean_reference(values),
+        coooda_cuda::ops::mean_device_reduce(values)
+    );
     coooda_core::test::require(
         coooda_cpp::ops::argmax_reference(values) == coooda_cuda::ops::argmax_baseline(values),
         label + "_argmax"
+    );
+    coooda_core::test::require(
+        coooda_cpp::ops::argmax_reference(values) == coooda_cuda::ops::argmax_device_reduce(values),
+        label + "_device_argmax"
     );
 }
 
@@ -64,10 +83,20 @@ int main() {
                  coooda_cpp::ops::sum_reference({}),
                  coooda_cuda::ops::sum_baseline({})
              );
+             require_close(
+                 "empty_device_sum",
+                 coooda_cpp::ops::sum_reference({}),
+                 coooda_cuda::ops::sum_device_reduce({})
+             );
              coooda_core::test::require(
                  throws_core_error([]() { (void)coooda_cpp::ops::max_reference({}); }) ==
                      throws_core_error([]() { (void)coooda_cuda::ops::max_baseline({}); }),
                  "empty max throw behavior should match"
+             );
+             coooda_core::test::require(
+                 throws_core_error([]() { (void)coooda_cpp::ops::max_reference({}); }) ==
+                     throws_core_error([]() { (void)coooda_cuda::ops::max_device_reduce({}); }),
+                 "empty device max throw behavior should match"
              );
              coooda_core::test::require(
                  throws_core_error([]() { (void)coooda_cpp::ops::mean_reference({}); }) ==
@@ -75,9 +104,19 @@ int main() {
                  "empty mean throw behavior should match"
              );
              coooda_core::test::require(
+                 throws_core_error([]() { (void)coooda_cpp::ops::mean_reference({}); }) ==
+                     throws_core_error([]() { (void)coooda_cuda::ops::mean_device_reduce({}); }),
+                 "empty device mean throw behavior should match"
+             );
+             coooda_core::test::require(
                  throws_core_error([]() { (void)coooda_cpp::ops::argmax_reference({}); }) ==
                      throws_core_error([]() { (void)coooda_cuda::ops::argmax_baseline({}); }),
                  "empty argmax throw behavior should match"
+             );
+             coooda_core::test::require(
+                 throws_core_error([]() { (void)coooda_cpp::ops::argmax_reference({}); }) ==
+                     throws_core_error([]() { (void)coooda_cuda::ops::argmax_device_reduce({}); }),
+                 "empty device argmax throw behavior should match"
              );
          }},
 
