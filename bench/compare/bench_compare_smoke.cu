@@ -6,6 +6,7 @@
 namespace coooda_bench::compare {
 
 void append_core_helper_cases(std::vector<coooda_core::bench::BenchmarkCase> &cases);
+void append_elementwise_compare_cases(std::vector<coooda_core::bench::BenchmarkCase> &cases);
 void append_matmul_compare_cases(std::vector<coooda_core::bench::BenchmarkCase> &cases);
 void append_memory_tensor_cases(std::vector<coooda_core::bench::BenchmarkCase> &cases);
 void append_reductions_compare_cases(std::vector<coooda_core::bench::BenchmarkCase> &cases);
@@ -26,6 +27,7 @@ int main(int argc, char **argv) {
     };
 
     coooda_bench::compare::append_core_helper_cases(cases);
+    coooda_bench::compare::append_elementwise_compare_cases(cases);
     coooda_bench::compare::append_matmul_compare_cases(cases);
     coooda_bench::compare::append_memory_tensor_cases(cases);
     coooda_bench::compare::append_reductions_compare_cases(cases);

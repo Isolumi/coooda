@@ -77,3 +77,7 @@ add_test(NAME reductions_compare COMMAND reductions_compare_tests)
 add_executable(matmul_compare_tests compare/test_matmul_compare.cu)
 target_link_libraries(matmul_compare_tests PRIVATE coooda_core coooda_cpp coooda_cuda)
 add_test(NAME matmul_compare COMMAND matmul_compare_tests)
+
+add_executable(elementwise_compare_tests compare/test_elementwise_compare.cu)
+target_link_libraries(elementwise_compare_tests PRIVATE coooda_core coooda_cpp coooda_cuda)
+add_test(NAME elementwise_compare COMMAND elementwise_compare_tests)
