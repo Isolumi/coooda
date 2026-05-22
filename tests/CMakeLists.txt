@@ -50,6 +50,10 @@ add_executable(matmul_cuda_tests cuda/test_matmul.cu)
 target_link_libraries(matmul_cuda_tests PRIVATE coooda_core coooda_cuda)
 add_test(NAME matmul_cuda COMMAND matmul_cuda_tests)
 
+add_executable(elementwise_cuda_tests cuda/test_elementwise.cu)
+target_link_libraries(elementwise_cuda_tests PRIVATE coooda_core coooda_cuda)
+add_test(NAME elementwise_cuda COMMAND elementwise_cuda_tests)
+
 add_executable(coooda_compare_tests compare/test_compare_smoke.cu)
 target_link_libraries(coooda_compare_tests PRIVATE coooda_core coooda_compare)
 add_test(NAME coooda_compare_tests COMMAND coooda_compare_tests)
