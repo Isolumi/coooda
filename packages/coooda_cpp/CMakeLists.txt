@@ -1,5 +1,6 @@
 add_library(coooda_cpp
   src/nn/loss.cpp
+  src/nn/normalization.cpp
   src/ops/elementwise.cpp
   src/ops/matmul.cpp
   src/ops/reductions.cpp

@@ -13,6 +13,7 @@ add_executable(coooda_compare_bench
   compare/bench_elementwise.cu
   compare/bench_matmul.cu
   compare/bench_memory_tensors.cu
+  compare/bench_normalization.cu
   compare/bench_reductions.cu
   compare/bench_softmax_loss.cu
   compare/bench_vector_ops_compare.cu
