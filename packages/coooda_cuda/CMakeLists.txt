@@ -1,5 +1,6 @@
 add_library(coooda_cuda
   src/memory/device_buffer.cu
+  src/nn/loss.cu
   src/ops/elementwise.cu
   src/ops/matmul.cu
   src/ops/reductions.cu

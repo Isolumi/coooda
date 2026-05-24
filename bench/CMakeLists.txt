@@ -14,6 +14,7 @@ add_executable(coooda_compare_bench
   compare/bench_matmul.cu
   compare/bench_memory_tensors.cu
   compare/bench_reductions.cu
+  compare/bench_softmax_loss.cu
   compare/bench_vector_ops_compare.cu
 )
 target_link_libraries(coooda_compare_bench PRIVATE coooda_core coooda_compare coooda_cpp coooda_cuda)
