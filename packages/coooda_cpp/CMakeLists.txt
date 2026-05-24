@@ -1,4 +1,5 @@
 add_library(coooda_cpp
+  src/nn/embedding.cpp
   src/nn/loss.cpp
   src/nn/normalization.cpp
   src/ops/elementwise.cpp
